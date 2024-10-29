@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+    {%- for mensagem  in get_flashed_messages() %}
+        <div class="alert alert-danger mt-2 ms-2 me-2">
+            {{ mensagem }}
+        </div>
+    {%- endfor %}
+
+    <div style="background: linear-gradient(#3E56A6, #182140);">
+        <div class="row col-5 p-4 mx-auto">
+            <div class="row shadow p-4 mx-auto mt-5 mb-5">
+                <h1 class="text-light text-center"> Cadastro de Produto </h1>
+                <i class="bi bi-handbag mx-auto text-center text-info fs-2"></i>
+                <form action="{{ url_for('cadastrarProduto') }}" method="POST">
+                    <input name="nome_produto" type="text" class="form-control rounded-pill m-2"
+                           placeholder="Produto:">
+                    <select name="id_categoria" class="form-control rounded-pill m-2">
+                        <option value="">Selecione uma categoria:</option>
+                        {% for categoria in var_categoria %}
+                            <option value="{{categoria.id_categoria}}">{{ categoria.nome_categoria }}</option>
+                        {% endfor %}
+                    </select>
+                    <input name="quantidade_produto" type="text" class="form-control rounded-pill m-2"
+                           placeholder="Quantidade:">
+                    <input name="preco_custo" type="number" class="form-control rounded-pill m-2"
+                           placeholder="Preço de Custo:">
+                    <input name="preco_venda" type="number" class="form-control rounded-pill m-2"
+                           placeholder="Preço de Venda:">
+                    <button class="d-flex justify-content-center btn btn-primary text-center rounded-pill mx-auto mt-4 m-2"> Cadastrar </button>
+                </form>
+                <hr>
+                <label class="text-center p-4 text-light">Acesse com mídias sociais</label>
+                <div class="row col-6 mx-auto">
+                    <i class="bi bi-facebook text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-instagram text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-telephone text-info col" style="font-size: 25px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock conteudo %}

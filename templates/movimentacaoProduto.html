@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+    {%- for mensagem  in get_flashed_messages() %}
+        <div class="alert alert-danger mt-2 ms-2 me-2">
+            {{ mensagem }}
+        </div>
+    {%- endfor %}
+
+    <div style="background: linear-gradient(#3E56A6, #182140);">
+        <div class="row col-5 mx-auto ">
+            <div class="row shadow p-5 mt-5 mb-5">
+                <h1 class="text-light text-center"> Movimentar Produtos no Estoque </h1>
+                <i class="bi bi-award-fill mx-auto text-center text-info fs-2"></i>
+                <form action="{{ url_for('movimenatacoProduto') }}" method="POST">
+                    <select name="id_produto" class="form-control rounded-pill m-2">
+                        <option value="">Selecione um produto:</option>
+                        {% for produto in var_produto %}
+                            <option value="{{ produto.id_produto }}">{{ produto.nome_produto }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="id_categoria" class="form-control rounded-pill m-2">
+                        <option value="">Selecione uma categoria:</option>
+                        {% for categoria in var_categoria %}
+                            <option value="{{categoria.id_categoria}}">{{ categoria.nome_categoria }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="id_funcionario" class="form-control rounded-pill m-2">
+                        <option value="">Funcionário que fez a movimentação:</option>
+                        {% for funcionario in var_funcionario %}
+                            <option value="{{ funcionario.id_funcionario }}">{{ funcionario.nome_funcionario }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="quantidade_movimentacao" class="form-control rounded-pill m-2"
+                           placeholder="Quantidade:">
+                    <input type="date" name="data_movimentacao" class="form-control rounded-pill m-2">
+                    <select name="tipo_movimentacao" class="form-control rounded-pill m-2">
+                        <option value="none">Selecione o tipo de movimentação:</option>
+                        <option value="Entrada">Entrada</option>
+                        <option value="Saída">Saída</option>
+                    </select>
+                    <button class="btn btn-primary text-center d-flex rounded-pill mx-auto m-2 mt-4"> Cadastrar</button>
+                </form>
+                <label class="text-center p-4 mt-1 text-light ">Acesse com mídias sociais</label>
+                <div class="row col-6 mx-auto m-1">
+                    <i class="bi bi-facebook text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-instagram text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-telephone-fill text-info col" style="font-size: 25px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock conteudo %}

@@ -1,0 +1,30 @@
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav.navbar.navbar-expand-lg {
+    height: 100px;
+    background-color: #182140;
+}
+
+#sidebar {
+    background-color: #182140;
+    width: 280px;
+}
+
+.principal {
+    display: flex;
+    flex-direction: row;
+
+}
+
+#main {
+    width: 100%;
+}
+
+.nav-item:hover {
+    background-color: #8B9EDD;
+}
+

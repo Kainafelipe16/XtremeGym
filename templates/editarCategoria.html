@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+    {%- for mensagem  in get_flashed_messages() %}
+        <div class="alert alert-danger mt-2 ms-2 me-2">
+            {{ mensagem }}
+        </div>
+    {%- endfor %}
+
+    <div style="background: linear-gradient(#3E56A6, #182140); height: 653px">
+        <div class="row col-5 mx-auto">
+            <div class="row shadow p-4 mt-5">
+                <h1 class="text-light text-center"> Editar Categoria </h1>
+                <i class="bi bi-award-fill mx-auto text-center text-info fs-2"></i>
+                <form action="{{ url_for('editarCategoria', id=categoria.id_categoria) }}" method="POST">
+                    <input type="text" name="nome_categoria" class="form-control rounded-pill m-2 mt-2" placeholder="Nome da Categoria:" value="{{ categoria.nome_categoria }}" required>
+                    <button class="btn btn-primary text-center d-flex rounded-pill mx-auto m-2 mt-4"> Salvar </button>
+                </form>
+                <hr>
+                <label class="text-center p-4 mt-1 text-light">Acesse com mídias sociais</label>
+                <div class="row col-6 mx-auto m-1">
+                    <i class="bi bi-facebook text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-instagram text-info col" style="font-size: 25px"></i>
+                    <i class="bi bi-telephone-fill text-info col" style="font-size: 25px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock conteudo %}

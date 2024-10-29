@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+    {%- for mensagem  in get_flashed_messages() %}
+        <div class="alert alert-danger mt-2 ms-2 me-2">
+            {{ mensagem }}
+        </div>
+    {%- endfor %}
+
+    <div id="tela" class="album py-2" style="background: linear-gradient(#3E56A6, #182140); height: 653px;">
+        <div class="text-left">
+            <h1 class="text-light" style="margin-top: 10px"> Lista de Produtos da XtremeGym </h1>
+        </div>
+
+        <div class="text-center mt-3 mb-5" style="float: left">
+            <button class="btn btn-primary text-center rounded-pill m-2" id="toggleButton"> Mudar Vizualização</button>
+        </div>
+
+        <div class="text-center mt-3 mb-5" style="float: right;">
+            <a href="{{ url_for('cadastrarProduto') }}">
+                <button class="btn btn-primary text-center rounded-pill m-2"> Cadastrar</button>
+            </a>
+        </div>
+
+        <!--COMEÇO DA VIZUALIZAÇÃO EM GRID-->
+        <div class="row grid">
+            <div class="container">
+                <div class="row mt-5 p-5">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border border-dark border-3">
+                            <img class="card-img-top border border-dark border-3"
+                                 style="width: 258px; height: 250px; display: block" alt="">
+                            <div class="card-body border border-dark border-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"> Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--COMEÇO DA VIZUALIZAÇÃO EM LISTA-->
+        <div class="col list">
+            <div class="p-3" id="tabela">
+                <table class="table table-primary table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center" style="width: 70px;"> Id</th>
+                        <th class="text-center" style="width: 190px;"> Nome</th>
+                        <th class="text-center" style="width: 190px;"> Categoria</th>
+                        <th class="text-center" style="width: 230px;"> Quantidade no Estoque</th>
+                        <th class="text-center" style="width: 190px;"> Preço de Custo</th>
+                        <th class="text-center" style="width: 160px;"> Preço de Venda</th>
+                        <th class="text-center"> Ações</th>
+                    </tr>
+                    </thead>
+                    {% if var_produto %}
+                        {% for produto in var_produto %}
+                            <tbody>
+                            <tr>
+                                <td> {{ produto.id_produto }} </td>
+                                <td> {{ produto.nome_produto }} </td>
+                                <td> {{ produto.id_categoria }} </td>
+                                <td> {{ produto.quantidade_produto }} </td>
+                                <td> {{ produto.preco_custo }} </td>
+                                <td> {{ produto.preco_venda }} </td>
+                                <td>
+                                    <a href="{{ url_for('editarProduto', id=produto.id_produto) }}"> <img
+                                            src="/static/editar.png" style="width: 50px;"> </a>
+                                    <a href="#"> <img src="/static/deletar.png" style="width: 50px;"> </a>
+                                    <img class="border border-dark border-solid 2px" src="/static/vizualizar.png"
+                                         style="background: #182140;width: 50px;">
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">Nenhum produto encontrado!</td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById("toggleButton");
+        const list = document.querySelector(".list");
+        const grid = document.querySelector(".grid");
+        grid.style.display = "none";
+        toggleButton.addEventListener("click", function () {
+            if (grid.style.display === "none") {
+                grid.style.display = "block";
+                list.style.display = "none";
+            } else {
+                grid.style.display = "none";
+                list.style.display = "block";
+            }
+        });
+    </script>
+
+{% endblock conteudo %}
