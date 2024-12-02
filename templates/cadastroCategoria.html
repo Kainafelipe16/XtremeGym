@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 
+    {%- for mensagem  in get_flashed_messages() %}
+        <div class="alert alert-danger mt-2 ms-2 me-2">
+            {{ mensagem }}
+        </div>
+    {%- endfor %}
+
     <div style="background: linear-gradient(#3E56A6, #182140); height: 653px">
-        <div class="row col-5 mx-auto">
+        <div class="row col-5 p-5 mx-auto mb-5">
             <div class="row shadow p-4 mt-5">
                 <h1 class="text-light text-center">Cadastro de Categoria</h1>
                 <i class="bi bi-award-fill mx-auto text-center text-info fs-2"></i>

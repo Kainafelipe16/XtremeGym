@@ -113,13 +113,11 @@ class Movimentacao(Base):
     id_movimentacao = Column(Integer, primary_key=True, unique=True)
     id_produto = Column(Integer, ForeignKey('produtos.id_produto'))
     produtos = relationship(Produto)
-    id_categoria = Column(Integer, ForeignKey('categorias.id_categoria'))
-    categorias = relationship(Categoria)
     quantidade_movimentacao = Column(Integer, nullable=True)
     data_movimentacao = Column(String(10), nullable=True)
     id_funcionario = Column(Integer, ForeignKey('funcionarios.id_funcionario'))
     funcionarios = relationship(Funcionario)
-    tipo_movimentacao = Column(Boolean, default=True, nullable=True)
+    tipo_movimentacao = Column(Boolean, nullable=True)
 
     def save(self):
         db_session.add(self)
@@ -133,7 +131,6 @@ class Movimentacao(Base):
         dados_movimentacao = {
             'id_movimentacao': self.id_movimentacao,
             'id_produto': self.id_produto,
-            'id_categoria': self.id_categoria,
             'quantidade_movimentacao': self.quantidade_movimentacao,
             'data_movimentacao': self.data_movimentacao,
             'id_funcionario': self.id_funcionario,
@@ -142,13 +139,12 @@ class Movimentacao(Base):
         return dados_movimentacao
 
     def __repr__(self):
-        return '<Movimentacao: {} {} {} {} {} {} {}>'.format(self.id_movimentacao,
-                                                             self.id_produto,
-                                                             self.id_categoria,
-                                                             self.quantidade_movimentacao,
-                                                             self.data_movimentacao,
-                                                             self.id_funcionario,
-                                                             self.tipo_movimentacao)
+        return '<Movimentacao: {} {} {} {} {} {}>'.format(self.id_movimentacao,
+                                                          self.id_produto,
+                                                          self.quantidade_movimentacao,
+                                                          self.data_movimentacao,
+                                                          self.id_funcionario,
+                                                          self.tipo_movimentacao)
 
 
 def init_db():

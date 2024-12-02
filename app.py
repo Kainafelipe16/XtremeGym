@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, url_for, redirect
 from flask import request
 from sqlalchemy import select
+
 from models import Funcionario, Categoria, db_session, Produto, Movimentacao
 
 app = Flask(__name__)
@@ -20,6 +21,7 @@ def movimentacoes():
     for movimentacao in lista_movimentacoes:
         listaMovimentacoes.append(movimentacao.serialize_movimentacao())
     print(listaMovimentacoes)
+
     return render_template('movimentacoes.html', var_movimentacao=listaMovimentacoes)
 
 
@@ -57,32 +59,41 @@ def listarCategorias():
 
 
 @app.route('/movimentacaoProduto', methods=['POST', "GET"])
-def movimenatacoProduto():
+def movimentacaoProduto():
     if request.method == 'POST':
-        # Verifica se os campos obrigatórios foram preenchidos
         if not request.form['id_produto']:
             flash("Escolha um produto para cadastrar uma entrada no estoque!", "error")
-        if not request.form['id_categoria']:
-            flash("Escolha a categoria do produto! (A CATEGORIA DEVE SER A MESMA QUE ESTÁ SALVA NO SISTEMA!)", "error")
         if not request.form['id_funcionario']:
             flash("Informe o funcionário que está movimentando!", "error")
         if not request.form['quantidade_movimentacao']:
             flash("Informe quantos produtos foram inseridos no estoque!", "error")
         if not request.form['data_movimentacao']:
             flash("Informe a data da movimentação!", "error")
+        if not request.form['tipo_movimentacao']:
+            flash("Informe o tipo de movimentacao!", "error")
 
         else:
+            tipo_mov = bool(int(request.form['tipo_movimentacao']))
             form_evento = Movimentacao(id_produto=int(request.form['id_produto']),
-                                       id_categoria=int(request.form['id_categoria']),
                                        id_funcionario=int(request.form['id_funcionario']),
                                        quantidade_movimentacao=int(request.form['quantidade_movimentacao']),
-                                       data_movimentacao=request.form['data_movimentacao'])
+                                       data_movimentacao=request.form['data_movimentacao'],
+                                       tipo_movimentacao=bool(int(request.form['tipo_movimentacao'])))
+            atuliza_estoque = db_session.execute(select(Produto).where(int(request.form['id_produto']) == Produto.id_produto)).scalar()
 
-            # Salva no banco de dados
+            if tipo_mov:
+                atuliza_estoque.quantidade_produto = int(request.form['quantidade_movimentacao']) + atuliza_estoque.quantidade_produto
+            else:
+                if atuliza_estoque.quantidade_produto >= int(request.form['quantidade_movimentacao']):
+                    atuliza_estoque.quantidade_produto = atuliza_estoque.quantidade_produto - int(request.form['quantidade_movimentacao'])
+                else:
+                    flash("Quantidade no estoque insuficiente!", "error")
+
+            print(atuliza_estoque.quantidade_produto)
             print(form_evento)
             form_evento.save()
-            db_session.close()
-            flash("Entrada de Produto Cadastrada!", "success")
+            # db_session.close()
+            flash("Movimentação de Produto Cadastrada!", "success")
             return redirect(url_for('movimentacoes'))
 
     # Recupera a lista de funcionários
@@ -106,9 +117,9 @@ def movimenatacoProduto():
     for categoria in lista_categorias:
         listaCategorias.append(categoria.serialize_categoria())
 
-    # Renderiza o template com as listas de funcionários e produtos
-    return render_template('movimentacaoProduto.html', var_funcionario=listaFuncionarios,
-                           var_produto=listaProdutos, var_categoria=listaCategorias)
+        # Renderiza o template com as listas de funcionários e produtos
+    return render_template('movimentacaoProduto.html', var_funcionario=listaFuncionarios, var_produto=listaProdutos,
+                           var_categoria=listaCategorias)
 
 
 @app.route('/cadastrarProduto', methods=['POST', "GET"])
@@ -277,11 +288,29 @@ def deletarFuncionario(id):
     funcionario = select(Funcionario).where(Funcionario.id_funcionario == id)
     print(funcionario)
     funcionario_del = db_session.execute(funcionario).scalar()
-    print(funcionario_del)
     funcionario_del.delete()
     flash('Funcionário deletado com sucesso!', 'success')
     return redirect(url_for('listarFuncionarios'))
-    # db_session.commit()
+
+
+@app.route('/deletarCategoria/<int:id>', methods=['POST', 'GET'])
+def deletarCategoria(id):
+    categoria = select(Categoria).where(Categoria.id_categoria == id)
+    print(categoria)
+    categoria_del = db_session.execute(categoria).scalar()
+    categoria_del.delete()
+    flash('Categoria deletado com sucesso!', 'success')
+    return redirect(url_for('listarCategorias'))
+
+
+@app.route('/deletarProduto/<int:id>', methods=['POST', 'GET'])
+def deletarProduto(id):
+    produto = select(Produto).where(Produto.id_produto == id)
+    print(produto)
+    produto_del = db_session.execute(produto).scalar()
+    produto_del.delete()
+    flash('Produto deletado com sucesso!', 'success')
+    return redirect(url_for('catalogo'))
 
 
 if __name__ == '__main__':

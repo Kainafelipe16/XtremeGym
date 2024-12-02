@@ -20,20 +20,22 @@
             <table class="table table-primary table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center" style="width: 70px;"> Id</th>
-                    <th class="text-center" style="width: 140px;"> Nome</th>
-                    <th class="text-center" style="width: 50px;"> Ações</th>
+                    <th class="text-center" style="width: 70px;"> Id </th>
+                    <th class="text-center" style="width: 140px;"> Nome </th>
+                    <th class="text-center" style="width: 50px;"> Ações </th>
                 </tr>
                 </thead>
                 {% if var_categoria %}
                     {% for categoria in var_categoria %}
                         <tbody>
                         <tr>
-                            <td> {{ categoria.id_categoria }} </td>
+                            <td class="text-center"> {{ categoria.id_categoria }} </td>
                             <td class="text-center"> {{ categoria.nome_categoria }} </td>
-                            <td>
+                            <td class="text-center">
                                 <a href="{{ url_for('editarCategoria', id=categoria.id_categoria) }}"> <img
-                                        src="/static/editar.png" style="width: 50px;"> </a>
+                                        src="/static/editar.png" style="width: 30px;"> </a>
+                                <a href="{{ url_for('deletarCategoria', id=categoria.id_categoria) }}"> <img
+                                        src="/static/deletar.png" style="width: 30px;"> </a>
                             </td>
                         </tr>
                         </tbody>

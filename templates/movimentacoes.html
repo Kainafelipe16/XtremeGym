@@ -2,7 +2,7 @@
 {% block conteudo %}
     <link rel="stylesheet" href="/static/movimentacoes.css">
 
-    <div style="background: linear-gradient(#3E56A6, #182140); height: 653px">
+    <div class="h-100" style="background: linear-gradient(#3E56A6, #182140);">
         <h1 class="text-center text-light">Controle de Estoque</h1>
         <div class="pai">
             <div class="container1">
@@ -38,13 +38,12 @@
 
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Produto</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Funcionário</th>
-                    <th scope="col">Status</th>
+                    <th class="text-center" scope="col">Id</th>
+                    <th class="text-center" scope="col">Produto</th>
+                    <th class="text-center" scope="col">Quantidade</th>
+                    <th class="text-center" scope="col">Data</th>
+                    <th class="text-center" scope="col">Funcionário</th>
+                    <th class="text-center" scope="col">Status</th>
                 </tr>
                 </thead>
 
@@ -52,19 +51,18 @@
                 {% if var_movimentacao %}
                     {% for movimentacao in var_movimentacao %}
                         <tr>
-                            <td>{{ movimentacao.id_movimentacao }}</td>
-                            <td>{{ movimentacao.id_produto }}</td>
-                            <td>{{ movimentacao.id_categoria }}</td>
-                            <td>{{ movimentacao.quantidade_movimentacao }}</td>
-                            <td>{{ movimentacao.data_movimentacao }}</td>
-                            <td>{{ movimentacao.id_funcionario }}</td>
-                            <td>
-                                {% if movimentacao.tipo_movimentacao == 'Entrada' %}
+                            <td class="text-center">{{ movimentacao.id_movimentacao }}</td>
+                            <td class="text-center">{{ movimentacao.id_produto }}</td>
+                            <td class="text-center">{{ movimentacao.quantidade_movimentacao }}</td>
+                            <td class="text-center">{{ movimentacao.data_movimentacao }}</td>
+                            <td class="text-center">{{ movimentacao.id_funcionario }}</td>
+                            <td class="text-center">
+                                {% if movimentacao.tipo_movimentacao == True %}
                                     <img src="/static/entrada.png" alt="Entrada" class="img-fluid"
-                                         style="width: 50px; height: auto;">
-                                {% elif movimentacao.tipo_movimentacao == 'Saída' %}
+                                         style="width: 30px; height: auto;">
+                                {% elif movimentacao.tipo_movimentacao == False %}
                                     <img src="/static/saida.png" alt="Saída" class="img-fluid"
-                                         style="width: 50px; height: auto;">
+                                         style="width: 30px; height: auto;">
                                 {% else %}
                                     <span>N/A</span>
                                 {% endif %}

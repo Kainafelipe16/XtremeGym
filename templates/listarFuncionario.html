@@ -23,30 +23,30 @@
             <table class="table table-primary table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center" style="width: 70px;"> Id</th>
-                    <th class="text-center" style="width: 190px;"> Nome</th>
-                    <th class="text-center" style="width: 190px;"> CPF</th>
-                    <th class="text-center" style="width: 230px;"> E-mail</th>
-                    <th class="text-center" style="width: 190px;"> Telefone</th>
-                    <th class="text-center" style="width: 160px;"> Cargo</th>
-                    <th class="text-center" style="width: 160px;"> Ações</th>
+                    <th class="text-center" style="width: 70px;"> Id </th>
+                    <th class="text-center" style="width: 190px;"> Nome </th>
+                    <th class="text-center" style="width: 190px;"> CPF </th>
+                    <th class="text-center" style="width: 230px;"> E-mail </th>
+                    <th class="text-center" style="width: 190px;"> Telefone </th>
+                    <th class="text-center" style="width: 160px;"> Cargo </th>
+                    <th class="text-center" style="width: 160px;"> Ações </th>
                 </tr>
                 </thead>
                 <tbody>
                 {% if var_funcionario %}
                     {% for funcionario in var_funcionario %}
                         <tr>
-                            <td> {{ funcionario.id_funcionario }} </td>
-                            <td> {{ funcionario.nome_funcionario }} </td>
-                            <td> {{ funcionario.cpf_funcionario }} </td>
-                            <td> {{ funcionario.email_funcionario }} </td>
-                            <td> {{ funcionario.telefone_funcionario }} </td>
-                            <td> {{ funcionario.cargo_funcionario }} </td>
-                            <td>
+                            <td class="text-center"> {{ funcionario.id_funcionario }} </td>
+                            <td class="text-center"> {{ funcionario.nome_funcionario }} </td>
+                            <td class="text-center"> {{ funcionario.cpf_funcionario }} </td>
+                            <td class="text-center"> {{ funcionario.email_funcionario }} </td>
+                            <td class="text-center"> {{ funcionario.telefone_funcionario }} </td>
+                            <td class="text-center"> {{ funcionario.cargo_funcionario }} </td>
+                            <td class="text-center">
                                 <a href="{{ url_for('editarFuncionario', id=funcionario.id_funcionario) }}"> <img
-                                        src="/static/editar.png" style="width: 50px;"> </a>
+                                        src="/static/editar.png" style="width: 30px;"> </a>
                                 <a href="{{ url_for('deletarFuncionario', id=funcionario.id_funcionario) }}"> <img
-                                        src="/static/deletar.png" style="width: 50px;"> </a>
+                                        src="/static/deletar.png" style="width: 30px;"> </a>
                             </td>
                         </tr>
                     {% endfor %}

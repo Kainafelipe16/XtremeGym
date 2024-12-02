@@ -12,35 +12,10 @@
             <h1 class="text-light" style="margin-top: 10px"> Lista de Produtos da XtremeGym </h1>
         </div>
 
-        <div class="text-center mt-3 mb-5" style="float: left">
-            <button class="btn btn-primary text-center rounded-pill m-2" id="toggleButton"> Mudar Vizualização</button>
-        </div>
-
         <div class="text-center mt-3 mb-5" style="float: right;">
             <a href="{{ url_for('cadastrarProduto') }}">
                 <button class="btn btn-primary text-center rounded-pill m-2"> Cadastrar</button>
             </a>
-        </div>
-
-        <!--COMEÇO DA VIZUALIZAÇÃO EM GRID-->
-        <div class="row grid">
-            <div class="container">
-                <div class="row mt-5 p-5">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm border border-dark border-3">
-                            <img class="card-img-top border border-dark border-3"
-                                 style="width: 258px; height: 250px; display: block" alt="">
-                            <div class="card-body border border-dark border-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"> Editar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!--COMEÇO DA VIZUALIZAÇÃO EM LISTA-->
@@ -62,18 +37,17 @@
                         {% for produto in var_produto %}
                             <tbody>
                             <tr>
-                                <td> {{ produto.id_produto }} </td>
-                                <td> {{ produto.nome_produto }} </td>
-                                <td> {{ produto.id_categoria }} </td>
-                                <td> {{ produto.quantidade_produto }} </td>
-                                <td> {{ produto.preco_custo }} </td>
-                                <td> {{ produto.preco_venda }} </td>
-                                <td>
+                                <td class="text-center"> {{ produto.id_produto }} </td>
+                                <td class="text-center"> {{ produto.nome_produto }} </td>
+                                <td class="text-center"> {{ produto.id_categoria }} </td>
+                                <td class="text-center"> {{ produto.quantidade_produto }} </td>
+                                <td class="text-center"> R$ {{ produto.preco_custo }},90 </td>
+                                <td class="text-center"> R$ {{ produto.preco_venda }},90 </td>
+                                <td class="text-center">
                                     <a href="{{ url_for('editarProduto', id=produto.id_produto) }}"> <img
-                                            src="/static/editar.png" style="width: 50px;"> </a>
-                                    <a href="#"> <img src="/static/deletar.png" style="width: 50px;"> </a>
-                                    <img class="border border-dark border-solid 2px" src="/static/vizualizar.png"
-                                         style="background: #182140;width: 50px;">
+                                            src="/static/editar.png" style="width: 30px;"> </a>
+                                    <a href="{{ url_for('deletarProduto', id=produto.id_produto) }}"> <img
+                                        src="/static/deletar.png" style="width: 30px;"> </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -89,21 +63,5 @@
         </div>
     </div>
     </div>
-
-    <script>
-        const toggleButton = document.getElementById("toggleButton");
-        const list = document.querySelector(".list");
-        const grid = document.querySelector(".grid");
-        grid.style.display = "none";
-        toggleButton.addEventListener("click", function () {
-            if (grid.style.display === "none") {
-                grid.style.display = "block";
-                list.style.display = "none";
-            } else {
-                grid.style.display = "none";
-                list.style.display = "block";
-            }
-        });
-    </script>
 
 {% endblock conteudo %}
