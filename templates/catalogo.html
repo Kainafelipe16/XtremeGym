@@ -8,12 +8,12 @@
     {%- endfor %}
 
     <div id="tela" class="album py-2" style="background: linear-gradient(#3E56A6, #182140); height: 653px;">
-        <div class="text-left">
+        <div class="text-center" style="float: left">
             <h1 class="text-light" style="margin-top: 10px"> Lista de Produtos da XtremeGym </h1>
         </div>
 
-        <div class="text-center mt-3 mb-5" style="float: right;">
-            <a href="{{ url_for('cadastrarProduto') }}">
+        <div style="float: right;margin-top: 10px; margin-bottom: 20px">
+            <a href="{{ url_for('cadastrarFuncionario') }}">
                 <button class="btn btn-primary text-center rounded-pill m-2"> Cadastrar</button>
             </a>
         </div>

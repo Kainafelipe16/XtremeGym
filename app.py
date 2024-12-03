@@ -143,7 +143,7 @@ def cadastrarProduto():
                                   id_categoria=int(request.form['id_categoria']))
             print(form_evento)
             form_evento.save()
-            db_session.close()
+            #db_session.close()
             flash("Produto Cadastrado com Sucesso!", "success")
             return redirect(url_for('catalogo'))
     lista_categorias = select(Categoria).select_from(Categoria)
@@ -158,16 +158,33 @@ def cadastrarProduto():
 @app.route('/cadastrarFuncionario', methods=['POST', "GET"])
 def cadastrarFuncionario():
     if request.method == 'POST':
+        cpf = request.form['cpf_funcionario']
+        sql_cpf = select(Funcionario).where(cpf == Funcionario.cpf_funcionario)
+        sql_cpf = db_session.execute(sql_cpf).scalar()
+        email = request.form['email_funcionario']
+        sql_email = select(Funcionario).where(email == Funcionario.email_funcionario)
+        sql_email = db_session.execute(sql_email).scalar()
+        tel = request.form['telefone_funcionario']
+        sql_tel = select(Funcionario).where(tel == Funcionario.telefone_funcionario)
+        sql_tel = db_session.execute(sql_tel).scalar()
+
         if not request.form['nome_funcionario']:
             flash("Preencha o nome do funcionário para realizar o cadastro!", "error")
-        if not request.form['cpf_funcionario']:
+        elif sql_cpf:
+            flash("O CPF informado pertence a outra pessoa!", "error")
+        elif sql_email:
+            flash("O E-mail informado pertence a outra pessoa!", "error")
+        elif sql_tel:
+            flash("O telefone informado pertence a outra pessoa!", "error")
+        elif not request.form['cpf_funcionario']:
             flash("Preencha o cpf do funcionário para realizar o cadastro!", "error")
-        if not request.form['email_funcionario']:
+        elif not request.form['email_funcionario']:
             flash("Preencha o email do funcionário para realizar o cadastro!", "error")
-        if not request.form['telefone_funcionario']:
+        elif not request.form['telefone_funcionario']:
             flash("Preencha o telefone do funcionário para realizar o cadastro!", "error")
-        if not request.form['cargo_funcionario']:
+        elif not request.form['cargo_funcionario']:
             flash("Preencha o cargo do funcionário para realizar o cadastro!", "error")
+
         else:
             form_evento = Funcionario(nome_funcionario=request.form['nome_funcionario'],
                                       cpf_funcionario=int(request.form['cpf_funcionario']),
@@ -176,7 +193,7 @@ def cadastrarFuncionario():
                                       cargo_funcionario=request.form['cargo_funcionario'])
             print(form_evento)
             form_evento.save()
-            db_session.close()
+            #db_session.close()
             flash("Funcionário Cadastrado com Sucesso!!", "sucess")
             return redirect(url_for('listarFuncionarios'))
 
@@ -186,13 +203,19 @@ def cadastrarFuncionario():
 @app.route('/cadastrarCategoria', methods=['POST', "GET"])
 def cadastrarCategoria():
     if request.method == 'POST':
+        cat = request.form['nome_categoria']
+        sql_cat = select(Categoria).where(cat == Categoria.nome_categoria)
+        sql_cat = db_session.execute(sql_cat).scalar()
+
         if not request.form['nome_categoria']:
             flash("Preencha o nome da categoria para realizar o cadastro!", "error")
+        elif sql_cat:
+            flash("A Categoria já existe!", "error")
         else:
             form_evento = Categoria(nome_categoria=request.form['nome_categoria'])
             print(form_evento)
             form_evento.save()
-            db_session.close()
+            #db_session.close()
             flash("Categoria Cadastrada com Sucesso!", "success")
             return redirect(url_for('listarCategorias'))
 
